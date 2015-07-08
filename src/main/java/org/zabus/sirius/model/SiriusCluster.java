@@ -1,15 +1,25 @@
 package org.zabus.sirius.model;
 
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Set;
 
 /**
  * Created by user on 08.07.2015.
  */
+@Entity
 public class SiriusCluster {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long siriusClusterID;
     private String clusterName;
     private String description;
     private boolean isMaster;
+    @Type(type = "Set")
     private Set<Integer> operatedObjects;
     private String virtualIP;
 
