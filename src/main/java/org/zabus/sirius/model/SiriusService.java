@@ -4,11 +4,19 @@ import org.zabus.sirius.mock.ServiceResourceType;
 import org.zabus.sirius.mock.SiriusServiceType;
 import org.zabus.sirius.mock.TransportType;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
 /**
  * Created by user on 08.07.2015.
  */
+@Entity
 public class SiriusService {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long siriusServiceID;
     private String category;
     private String description;
