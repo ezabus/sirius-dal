@@ -1,9 +1,17 @@
 package org.zabus.sirius.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Created by user on 08.07.2015.
  */
+@Entity
 public class SiriusServer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long siriusServerID;
     private String description;
     private String realIP;
