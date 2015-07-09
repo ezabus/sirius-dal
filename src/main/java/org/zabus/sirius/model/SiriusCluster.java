@@ -2,10 +2,7 @@ package org.zabus.sirius.model;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -19,7 +16,7 @@ public class SiriusCluster {
     private String clusterName;
     private String description;
     private boolean isMaster;
-    @Type(type = "Set")
+    @ElementCollection
     private Set<Integer> operatedObjects;
     private String virtualIP;
 

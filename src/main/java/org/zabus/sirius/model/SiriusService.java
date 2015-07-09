@@ -1,5 +1,6 @@
 package org.zabus.sirius.model;
 
+import org.hibernate.annotations.Type;
 import org.zabus.sirius.mock.ServiceResourceType;
 import org.zabus.sirius.mock.SiriusServiceType;
 import org.zabus.sirius.mock.TransportType;
@@ -26,8 +27,10 @@ public class SiriusService {
     private boolean isSecured;
     private boolean isSiriusService;
     private String managementObjectName;
+    @Type(type = "ServiceResourceType")
     private ServiceResourceType resourceType;
     private String serviceName;
+    @Type(type = "SiriusServiceType")
     private SiriusServiceType siriusServiceType;
 
     public SiriusService() {
