@@ -3,6 +3,7 @@ package org.zabus.sirius.dal;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zabus.sirius.mock.TransportType;
+import org.zabus.sirius.model.SiriusCluster;
 import org.zabus.sirius.model.SiriusServiceMethod;
 import java.util.List;
 
@@ -17,7 +18,11 @@ public class Main {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
         context.getEnvironment().setActiveProfiles("test");
         context.refresh();
-        Service service = (Service) context.getBean("service");
+
+        ClusterRepository repository = (ClusterRepository) context.getBean("clusterRepository");
+        SiriusCluster cluster = repository.findOne(1L);
+        System.out.println(cluster.getVirtualIP());
+        /*Service service = (Service) context.getBean("service");
 
         SiriusServiceMethod ssm = new SiriusServiceMethod();
         ssm.setDescription("decripition");
@@ -32,7 +37,7 @@ public class Main {
         for(SiriusServiceMethod s : ssmList)
         {
             System.out.println(s.getSiriusServiceMethodName());
-        }
+        }*/
 
     }
 }

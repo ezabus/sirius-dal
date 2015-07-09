@@ -11,10 +11,14 @@ INSERT INTO SiriusServiceMethod(description,managementObjectName,serviceKeyword,
 
 INSERT INTO SiriusService(category,description,endpoint,entityKeyword,isHardcoded,isSecured,isSiriusService,managementObjectName,serviceName)
   VALUES ('category','description','endpoint','entityKeyword',TRUE,TRUE,TRUE,'managementObjectName','serviceName');
-/*INSERT  INTO SiriusService(category,description,endpoint,entityKeyword,isHardcoded,isSecured,isSiriusService,managementObjectName,serviceName)
+INSERT  INTO SiriusService(category,description,endpoint,entityKeyword,isHardcoded,isSecured,isSiriusService,managementObjectName,serviceName)
   VALUES ('category1','description1','endpoint1','entityKeyword1',TRUE,TRUE,TRUE,'managementObjectName1','serviceName1');
 INSERT  INTO SiriusService(category,description,endpoint,entityKeyword,isHardcoded,isSecured,isSiriusService,managementObjectName,serviceName)
   VALUES ('category2','description2','endpoint2','entityKeyword2',TRUE,TRUE,TRUE,'managementObjectName2','serviceName2');
- ,
- */
 
+INSERT INTO SiriusCluster (clusterName,description,isMaster,virtualIP)
+    VALUES ('clusterName','description',TRUE ,'virtualIP');
+INSERT INTO SiriusCluster (clusterName,description,isMaster,virtualIP)
+    VALUES ('clusterName1','description1',TRUE ,'virtualIP1');
+INSERT INTO SiriusCluster (clusterName,description,isMaster,virtualIP)
+    VALUES ('clusterName2','description2',TRUE ,'virtualIP2');
