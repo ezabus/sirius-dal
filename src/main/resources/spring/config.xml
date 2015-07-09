@@ -16,15 +16,14 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
 
        <bean id="entityManagerFactory"
              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-              <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
-              <property name="persistenceUnitName" value="testingSetup"/>
-              <property name="dataSource" ref="dataSource" />
-              <property name="jpaVendorAdapter">
-                     <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                            <!-- Create the database, please -->
-                            <property name="generateDdl" value="true" />
-                     </bean>
-              </property>
+            <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
+            <property name="persistenceUnitName" value="testingSetup"/>
+            <property name="dataSource" ref="dataSource" />
+            <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+       </bean>
+
+       <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+           <property name="generateDdl" value="true" />
        </bean>
 
        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

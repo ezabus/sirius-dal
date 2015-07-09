@@ -4,7 +4,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zabus.sirius.mock.TransportType;
 import org.zabus.sirius.model.SiriusServiceMethod;
-
 import java.util.List;
 
 /**
@@ -14,7 +13,10 @@ import java.util.List;
 public class Main {
     public static void main(String args[])
     {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring/config.xml");
+        //ApplicationContext context = new ClassPathXmlApplicationContext("spring/config.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
+        context.getEnvironment().setActiveProfiles("test");
+        context.refresh();
         Service service = (Service) context.getBean("service");
 
         SiriusServiceMethod ssm = new SiriusServiceMethod();
@@ -31,5 +33,6 @@ public class Main {
         {
             System.out.println(s.getSiriusServiceMethodName());
         }
+
     }
 }
