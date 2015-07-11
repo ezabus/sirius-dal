@@ -1,14 +1,14 @@
 package org.zabus.sirius.model;
 
-import org.hibernate.annotations.Type;
 import org.zabus.sirius.mock.ServiceResourceType;
 import org.zabus.sirius.mock.SiriusServiceType;
 import org.zabus.sirius.mock.TransportType;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.Entity;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by user on 08.07.2015.
@@ -27,14 +27,30 @@ public class SiriusService {
     private boolean isSecured;
     private boolean isSiriusService;
     private String managementObjectName;
-    @Type(type = "ServiceResourceType")
     private ServiceResourceType resourceType;
     private String serviceName;
-    @Type(type = "SiriusServiceType")
     private SiriusServiceType siriusServiceType;
+    private TransportType transport;
+    @OneToMany(mappedBy = "siriusService", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Collection<SiriusServiceMethod> siriusServiceMethods;
 
     public SiriusService() {
+        siriusServiceMethods = new LinkedList<SiriusServiceMethod>();
+    }
 
+    public void addSiriusServiceMethod(SiriusServiceMethod siriusServiceMethod)
+    {
+        siriusServiceMethods.add(siriusServiceMethod);
+    }
+
+    public void setSiriusServiceMethods(Collection<SiriusServiceMethod> siriusServiceMethods)
+    {
+        this.siriusServiceMethods = new LinkedList<SiriusServiceMethod>(siriusServiceMethods);
+    }
+
+    public  Collection<SiriusServiceMethod> getSiriusServiceMethods()
+    {
+        return  siriusServiceMethods;
     }
 
     public long getSiriusServiceID() {
@@ -141,5 +157,11 @@ public class SiriusService {
         this.transport = transport;
     }
 
-    private TransportType transport;
+    @Override
+    public String toString()
+    {
+        return siriusServiceID + " " + category + " " + description + " " + endpoint + " " + entityKeyword +
+                " " + isHardcoded + " " + isSecured + " " + isSiriusService + " " + managementObjectName + " " + serviceName;
+    }
+
 }

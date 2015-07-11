@@ -13,11 +13,32 @@ public class SiriusServiceMethod {
     private String managementObjectName;
     private String serviceKeyword;
     private String siriusServiceMethodName;
-    @Type(type = "TransportType")
     private TransportType transport;
+    @ManyToOne
+    @JoinColumn(name = "siriusServiceID")
+    private SiriusService siriusService;
+
+    public SiriusServiceMethod(String description, String managementObjectName, String serviceKeyword, String siriusServiceMethodName, TransportType transport, SiriusService siriusService) {
+        this.description = description;
+        this.managementObjectName = managementObjectName;
+        this.serviceKeyword = serviceKeyword;
+        this.siriusServiceMethodName = siriusServiceMethodName;
+        this.transport = transport;
+        this.siriusService = siriusService;
+    }
 
     public SiriusServiceMethod() {
 
+    }
+
+    public void setSiriusService(SiriusService siriusService)
+    {
+        this.siriusService = siriusService;
+    }
+
+    public SiriusService getSiriusService()
+    {
+        return siriusService;
     }
 
     public long getSiriusServiceMethodID() {
@@ -68,5 +89,10 @@ public class SiriusServiceMethod {
         this.transport = transport;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return siriusServiceMethodID + " " + description + " " + managementObjectName + " " + serviceKeyword  + " " +
+                siriusServiceMethodName;
+    }
 }
