@@ -4,18 +4,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zabus.sirius.dal.MethodRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
  * Created by user on 11.07.2015.
  */
 public class SiriusServiceMethodTest {
-    static MethodRepository methodRepository;
-    static SiriusServiceMethod record;
+    static EntityManager em;
+    static final String selectQuery = "select method from SiriusServiceMethod method";
+    static SiriusServiceMethod expectedRecord;
     static int numberOfMethods;
     @BeforeClass
     public static void setUp()
@@ -23,82 +27,87 @@ public class SiriusServiceMethodTest {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
         context.getEnvironment().setActiveProfiles("test");
         context.refresh();
-        System.out.println("Prepare");
-        methodRepository = (MethodRepository) context.getBean("methodRepository");
+        EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
+        em = emf.createEntityManager();
         numberOfMethods = 5;
-        record = new SiriusServiceMethod();
-        record.setDescription("method");
-        record.setManagementObjectName("objectName");
-        record.setServiceKeyword("keyword");
-        record.setSiriusServiceMethodName("methodName");
+        expectedRecord = new SiriusServiceMethod();
+        expectedRecord.setDescription("method");
+        expectedRecord.setManagementObjectName("objectName");
+        expectedRecord.setServiceKeyword("keyword");
+        expectedRecord.setSiriusServiceMethodName("methodName");
                 //'method', 'objectName', 'keyword','methodName',1
     }
+
+    SiriusServiceMethod foundMethod;
+
+    @Before
+    public void setFoundMethod()
+    {
+        em.getTransaction().begin();
+        TypedQuery<SiriusServiceMethod> query =  em.createQuery(selectQuery +
+                " where method.siriusServiceMethodID = 1", SiriusServiceMethod.class);
+        List<SiriusServiceMethod> siriusMethodList = query.getResultList();
+        foundMethod = siriusMethodList.get(0);
+        em.getTransaction().commit();
+
+}
 
     @Test
     public void testNumberOfRecords()
     {
-        List<SiriusServiceMethod> methodList = (List<SiriusServiceMethod>) methodRepository.findAll();
-        assertEquals(numberOfMethods,methodList.size());
+        em.getTransaction().begin();
+        TypedQuery<SiriusServiceMethod> query =  em.createQuery(selectQuery, SiriusServiceMethod.class);
+        List<SiriusServiceMethod> methodList = query.getResultList();
+        assertEquals(numberOfMethods, methodList.size());
+        em.getTransaction().commit();
     }
 
     @Test
     public void testSetGetDescription()
     {
-        assertEquals("method",record.getDescription());
-        List<SiriusServiceMethod> methodList = (List<SiriusServiceMethod>) methodRepository.findAll();
-        assertEquals(numberOfMethods,methodList.size());
+        assertEquals("method", expectedRecord.getDescription());
     }
 
     @Test
     public void testDescription()
     {
-        SiriusServiceMethod siriusServiceMethod = methodRepository.findOne(1L);
-        assertEquals(record.getDescription(),siriusServiceMethod.getDescription());
-
-        List<SiriusServiceMethod> methodList = (List<SiriusServiceMethod>) methodRepository.findAll();
-        assertEquals(numberOfMethods,methodList.size());
+        assertEquals(expectedRecord.getDescription(), foundMethod.getDescription());
     }
 
     @Test
     public void testSetGetManagementObject()
     {
-        assertEquals("objectName",record.getManagementObjectName());
+        assertEquals("objectName", expectedRecord.getManagementObjectName());
     }
 
     @Test
     public void testManagementObject()
     {
-        SiriusServiceMethod siriusServiceMethod = methodRepository.findOne(1L);
-        assertEquals(record.getManagementObjectName(),siriusServiceMethod.getManagementObjectName());
-
-        List<SiriusServiceMethod> methodList = (List<SiriusServiceMethod>) methodRepository.findAll();
-        assertEquals(numberOfMethods,methodList.size());
+        assertEquals(expectedRecord.getManagementObjectName(),foundMethod.getManagementObjectName());
     }
 
     @Test
     public void testSetGetManagementObjectName()
     {
-        assertEquals("keyword",record.getServiceKeyword());
+        assertEquals("keyword", expectedRecord.getServiceKeyword());
     }
 
     @Test
     public void testServiceKeyword()
     {
-        SiriusServiceMethod siriusServiceMethod = methodRepository.findOne(1L);
-        assertEquals(record.getServiceKeyword(),siriusServiceMethod.getServiceKeyword());
+        assertEquals(expectedRecord.getServiceKeyword(),foundMethod.getServiceKeyword());
     }
 
     @Test
     public void testSetGetSiriusServiceMethodName()
     {
-        assertEquals("methodName",record.getSiriusServiceMethodName());
+        assertEquals("methodName", expectedRecord.getSiriusServiceMethodName());
     }
 
     @Test
     public void testSiriusServiceMethodName()
     {
-        SiriusServiceMethod siriusServiceMethod = methodRepository.findOne(1L);
-        assertEquals(record.getSiriusServiceMethodName(),siriusServiceMethod.getSiriusServiceMethodName());
+        assertEquals(expectedRecord.getSiriusServiceMethodName(),foundMethod.getSiriusServiceMethodName());
     }
 
 }
