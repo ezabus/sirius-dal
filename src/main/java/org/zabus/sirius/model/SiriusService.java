@@ -31,7 +31,10 @@ public class SiriusService {
     private String serviceName;
     private SiriusServiceType siriusServiceType;
     private TransportType transport;
-    @OneToMany(mappedBy = "siriusService", orphanRemoval = true, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "siriusServerID")
+    private SiriusServer siriusServer;
+    @OneToMany(mappedBy = "siriusService", orphanRemoval = true, fetch = FetchType.LAZY)
     private Collection<SiriusServiceMethod> siriusServiceMethods;
 
     public SiriusService() {
