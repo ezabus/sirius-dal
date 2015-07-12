@@ -1,9 +1,7 @@
 package org.zabus.sirius.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by user on 08.07.2015.
@@ -16,9 +14,21 @@ public class SiriusServer {
     private String description;
     private String realIP;
     private String serverName;
+    @OneToMany(mappedBy = "siriusServer", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Collection<SiriusService> siriusServices;
 
     public SiriusServer() {
 
+    }
+
+    public void setSiriusServices(Collection<SiriusService> siriusServices)
+    {
+        this.siriusServices = siriusServices;
+    }
+
+    public Collection<SiriusService> getSiriusServices()
+    {
+        return siriusServices;
     }
 
     public long getSiriusServerID() {
