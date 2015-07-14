@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by user on 14.07.2015.
+ *
  */
 public class SiriusClusterTest {
     static EntityManager em;
