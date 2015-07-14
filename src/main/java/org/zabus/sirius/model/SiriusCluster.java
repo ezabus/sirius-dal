@@ -3,6 +3,9 @@ package org.zabus.sirius.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -19,9 +22,47 @@ public class SiriusCluster {
     @ElementCollection
     private Set<Integer> operatedObjects;
     private String virtualIP;
+    @ManyToMany(mappedBy="siriusClusters", fetch = FetchType.LAZY)
+    private Set<SiriusServer> siriusServers;
+    @ManyToOne
+    @JoinColumn(name = "parentSiriusClusterID")
+    private SiriusCluster parentCluster;
+    @OneToMany(mappedBy = "parentCluster")
+    private Collection<SiriusCluster> childClusters;
 
     public SiriusCluster() {
+        siriusServers = new HashSet<SiriusServer>();
+        childClusters = new LinkedList<SiriusCluster>();
+    }
 
+    public void setParentCluster(SiriusCluster parentCluster)
+    {
+        this.parentCluster = parentCluster;
+    }
+
+    public SiriusCluster getParentCluster()
+    {
+        return parentCluster;
+    }
+
+    public void setChildClusters(Collection<SiriusCluster> childClusters)
+    {
+        this.childClusters = childClusters;
+    }
+
+    public Collection<SiriusCluster> getChildClusters()
+    {
+        return childClusters;
+    }
+
+    public void setSiriusServers(Set<SiriusServer> siriusServers)
+    {
+        this.siriusServers = siriusServers;
+    }
+
+    public Set<SiriusServer> getSiriusServers()
+    {
+        return siriusServers;
     }
 
     public long getSiriusClusterID() {
@@ -70,5 +111,11 @@ public class SiriusCluster {
 
     public void setVirtualIP(String virtualIP) {
         this.virtualIP = virtualIP;
+    }
+
+    @Override
+    public String toString()
+    {
+        return siriusClusterID + " " + clusterName + " " + description + " " + isMaster + " " + virtualIP;
     }
 }
