@@ -41,11 +41,6 @@ public class SiriusService {
         siriusServiceMethods = new LinkedList<SiriusServiceMethod>();
     }
 
-    public void addSiriusServiceMethod(SiriusServiceMethod siriusServiceMethod)
-    {
-        siriusServiceMethods.add(siriusServiceMethod);
-    }
-
     public void setSiriusServiceMethods(Collection<SiriusServiceMethod> siriusServiceMethods)
     {
         this.siriusServiceMethods = new LinkedList<SiriusServiceMethod>(siriusServiceMethods);
