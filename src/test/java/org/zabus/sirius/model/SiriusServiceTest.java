@@ -40,7 +40,7 @@ public class SiriusServiceTest
         expectedRecord.setIsSiriusService(true);
         expectedRecord.setManagementObjectName("managementObjectName");
         expectedRecord.setServiceName("serviceName");
-        numberOfRecords = 3;
+        numberOfRecords = 12;
     }
 
     SiriusService foundRecord;
@@ -62,8 +62,8 @@ public class SiriusServiceTest
         em.getTransaction().begin();
         TypedQuery<SiriusService> query =  em.createQuery(selectQuery, SiriusService.class);
         List<SiriusService> siriusServiceList = query.getResultList();
-        assertEquals(numberOfRecords, siriusServiceList.size());
         em.getTransaction().commit();
+        assertEquals(numberOfRecords, siriusServiceList.size());
 
     }
 
