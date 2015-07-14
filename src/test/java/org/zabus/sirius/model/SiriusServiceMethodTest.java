@@ -23,8 +23,8 @@ public class SiriusServiceMethodTest {
     @BeforeClass
     public static void setUp()
     {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
-        context.getEnvironment().setActiveProfiles("test");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/context.xml");
+        context.getEnvironment().setActiveProfiles("develop");
         context.refresh();
         EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
         em = emf.createEntityManager();
