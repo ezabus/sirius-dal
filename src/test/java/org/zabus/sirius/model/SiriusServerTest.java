@@ -24,17 +24,11 @@ public class SiriusServerTest {
     @BeforeClass
     public static void setUp() {
         numberOfRecords = 5;
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
-        context.getEnvironment().setActiveProfiles("test");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/context.xml");
+        context.getEnvironment().setActiveProfiles("develop");
         context.refresh();
         EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
         em = emf.createEntityManager();
-        /*
-        private long siriusServerID;
-        private String description;
-        private String realIP;
-        private String serverName;
-         'description1','100.100.100.1','serverName1'*/
         expectedRecord = new SiriusServer();
         expectedRecord.setDescription("description1");
         expectedRecord.setRealIP("100.100.100.1");
@@ -58,8 +52,8 @@ public class SiriusServerTest {
         em.getTransaction().begin();
         TypedQuery<SiriusServer> query =  em.createQuery(selectQuery, SiriusServer.class);
         List<SiriusServer> methodList = query.getResultList();
-        assertEquals(numberOfRecords, methodList.size());
         em.getTransaction().commit();
+        assertEquals(numberOfRecords, methodList.size());
     }
 
     @Test
