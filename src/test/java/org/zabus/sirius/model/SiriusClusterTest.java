@@ -24,8 +24,8 @@ public class SiriusClusterTest {
     @BeforeClass
     public static void setUp() {
         numberOfRecords = 3;
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
-        context.getEnvironment().setActiveProfiles("test");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/context.xml");
+        context.getEnvironment().setActiveProfiles("develop");
         context.refresh();
         EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
         em = emf.createEntityManager();
@@ -73,8 +73,8 @@ public class SiriusClusterTest {
         em.getTransaction().begin();
         TypedQuery<SiriusCluster> query =  em.createQuery(selectQuery, SiriusCluster.class);
         List<SiriusCluster> methodList = query.getResultList();
-        assertEquals(numberOfRecords, methodList.size());
         em.getTransaction().commit();
+        assertEquals(numberOfRecords, methodList.size());
     }
 
     @Test
