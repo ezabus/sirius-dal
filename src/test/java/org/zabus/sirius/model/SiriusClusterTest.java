@@ -30,12 +30,6 @@ public class SiriusClusterTest {
         context.refresh();
         EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
         em = emf.createEntityManager();
-        /*
-         private long siriusClusterID;
-        private String clusterName;
-        private String description;
-        private boolean isMaster;
-         clusterName','description',TRUE ,'virtualIP',1*/
         expectedRecord = new SiriusCluster();
         expectedRecord.setClusterName("clusterName");
         expectedRecord.setDescription("description");
