@@ -25,27 +25,11 @@ public class SiriusServiceTest
     @BeforeClass
     public static void setUp()
     {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/profiles.xml");
-        context.getEnvironment().setActiveProfiles("test");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/context.xml");
+        context.getEnvironment().setActiveProfiles("develop");
         context.refresh();
         EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
         em = emf.createEntityManager();
-        /*
-        private long siriusServiceID;
-        private String category;
-        private String description;
-        private String endpoint;
-        private String entityKeyword;
-        private boolean isHardcoded;
-        private boolean isSecured;
-        private boolean isSiriusService;
-        private String managementObjectName;
-        private ServiceResourceType resourceType;
-        private String serviceName;
-        private SiriusServiceType siriusServiceType;
-        private TransportType transport;
-         'category','description','endpoint','entityKeyword',TRUE,TRUE,TRUE,'managementObjectName','serviceName'
-         */
         expectedRecord = new SiriusService();
         expectedRecord.setCategory("category");
         expectedRecord.setDescription("description");
