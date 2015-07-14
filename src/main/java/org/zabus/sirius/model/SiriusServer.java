@@ -2,6 +2,9 @@ package org.zabus.sirius.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * Created by user on 08.07.2015.
@@ -14,11 +17,32 @@ public class SiriusServer {
     private String description;
     private String realIP;
     private String serverName;
-    @OneToMany(mappedBy = "siriusServer", orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "siriusServer", orphanRemoval = true, fetch = FetchType.LAZY)
     private Collection<SiriusService> siriusServices;
+    @JoinTable
+            (name="SERVER_CLUSTER",
+                joinColumns = {
+                        @JoinColumn(name = "siriusServerID", referencedColumnName = "siriusServerID")
+                },
+                inverseJoinColumns = {
+                        @JoinColumn(name = "siriusClusterID", referencedColumnName = "siriusClusterID")
+                }
+            )
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<SiriusCluster> siriusClusters;
 
     public SiriusServer() {
+        siriusClusters = new HashSet<SiriusCluster>();
+    }
 
+    public void setSiriusClusters(Set<SiriusCluster> siriusClusters)
+    {
+        this.siriusClusters = siriusClusters;
+    }
+
+    public Set<SiriusCluster> getSiriusClusters()
+    {
+        return siriusClusters;
     }
 
     public void setSiriusServices(Collection<SiriusService> siriusServices)
@@ -61,5 +85,11 @@ public class SiriusServer {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    @Override
+    public String toString()
+    {
+      return siriusServerID + " " + description + " " + serverName + " " + realIP;
     }
 }
