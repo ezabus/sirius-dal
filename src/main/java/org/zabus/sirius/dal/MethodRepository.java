@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.zabus.sirius.model.SiriusServiceMethod;
 
 @Repository
-public interface SiriusRepository extends CrudRepository<SiriusServiceMethod,Long> {
+public interface MethodRepository extends CrudRepository<SiriusServiceMethod,Long> {
 
 }
